@@ -4,7 +4,8 @@ on:
   schedule:
     - cron:  '30 7 * * *'
   workflow_dispatch:
-
+permissions:
+  actions: write
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -14,8 +15,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Git
         run: |
-          git config --global user.email "bot@modm.io"
-          git config --global user.name "modm update bot"
+          git config --global user.email "it@huconn.com"
+          git config --global user.name "update bot"
 
       - name: Run update.py script
         run: |
@@ -28,8 +29,7 @@ jobs:
         run: |
           git checkout -b keep-alive
       - name: Keep Alive
-        if: always()
         uses: gautamkrishnar/keepalive-workflow@v1
         with:
-          committer_username: modm update bot
-          committer_email: bot@modm.io
+          committer_username: update bot
+          committer_email: it@huconn.com

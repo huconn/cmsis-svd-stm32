@@ -76,7 +76,10 @@ def unzip_families(families):
 def commit_changes():
     subprocess.run("git add README.md stm32*", shell=True)
     if subprocess.call("git diff-index --quiet HEAD --", shell=True):
-        subprocess.run('git commit -m "Update STM32 SVD files"', shell=True)
+        # if there are changes update the date
+        today = subprocess.run("date", shell=True, stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+        commit_msg = f"Update STM32 SVD files (Date: {today})"
+        subprocess.run('git commit -m "{}"'.format(commit_msg), shell=True)
 
 
 families = download_families("-d" in sys.argv)
